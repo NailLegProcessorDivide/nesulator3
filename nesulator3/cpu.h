@@ -1,32 +1,30 @@
-#pragma once
+#ifndef cpu
+#define cpu
+
 #include <stdint.h>
-namespace J6502{
-	struct device {
-		uint8_t(*readfun)(void*, uint16_t);//data, address
-		void(*writefun)(void*, uint16_t, uint8_t);//data, address, value
-		uint16_t start;
-		uint16_t length;
-		void* data;
-	};
+#include "emulatorGlue.h"
 
-	struct cpu6502 {
-		uint8_t A, X, Y, SP;
-		uint16_t PC;
-		uint8_t Flags;
-		uint8_t Interupts;
-		device* devices;
-		size_t deviceCount;
-		//int (*opmap[256])(cpu6502&);
-	};
+struct mos6502 {
+public:
+	uint8_t A, X, Y, SP;
+	uint16_t PC;
+	uint8_t flags;
+	uint8_t interupts;
+	device816* devices;
+	size_t deviceCount;
+};
 
-	struct cpu6502State {
-		uint8_t A, X, Y;
-		uint16_t PC;
-		uint8_t FLAGS;
-	};
+struct cpuState {
+	uint8_t A, X, Y;
+	uint16_t PC;
+	uint8_t FLAGS;
+};
+void createCpu(mos6502&);
+bool addDevice(mos6502&, device816&);
+int stepCpu(mos6502&);
 
-	cpu6502* createCpu();
-	void deleteCpu(cpu6502&);
-	void addDevice(cpu6502&, device*);
-	void stepCpu(cpu6502&);
-}
+void triggerNMI(mos6502& _cpu);
+void triggerRST(mos6502& _cpu);
+void triggerIRQ(mos6502& _cpu);
+
+#endif // !cpu
