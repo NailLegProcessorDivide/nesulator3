@@ -659,7 +659,7 @@ int SED(mos6502& _cpu) {
 	return clockcycles;
 }
 
-static int (*cpuopmap[256])(mos6502&) = {
+static const mos6502instruction cpuopmap[256] = {
 	//  0      , 1            , 2          , 3     , 4           , 5           , 6           , 7     , 8     , 9           , A          , B     , C           , D           , E           , F
 	BRK<7>     , ORA<xind , 6>, nop<0>     , nop<0>, nop<0>      , ORA<zpg, 3> , ASL<zpg, 5> , nop<0>, PHP<3>, ORA<imm, 2> , ASLA<2>, nop<0>, nop<0>      , ORA<abs, 4> , ASL<abs, 6> , nop<0>,//0
 	BPL<rel, 2>, ORA<indy , 5>, nop<0>     , nop<0>, nop<0>      , ORA<zpgx, 4>, ASL<zpgx, 6>, nop<0>, CLC<2>, ORA<absy, 4>, nop<0> , nop<0>, nop<0>      , ORA<absx, 4>, ASL<absx, 7>, nop<0>,//1

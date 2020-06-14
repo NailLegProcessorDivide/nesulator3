@@ -27,4 +27,6 @@ void triggerNMI(mos6502& _cpu);
 void triggerRST(mos6502& _cpu);
 void triggerIRQ(mos6502& _cpu);
 
+
+typedef int (*mos6502instruction)(mos6502&);
 #endif // !cpu
